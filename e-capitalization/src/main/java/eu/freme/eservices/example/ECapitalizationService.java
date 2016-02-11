@@ -30,6 +30,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Statement;
 
+import eu.freme.common.conversion.rdf.RDFConversionService;
 import eu.freme.common.exception.BadRequestException;
 import eu.freme.common.exception.InternalServerErrorException;
 import eu.freme.common.rest.BaseRestController;
@@ -49,6 +50,9 @@ public class ECapitalizationService extends BaseRestController {
 	@Autowired
 	RestHelper restHelper;
 
+	@Autowired
+	RDFConversionService rdfConversionService;
+
 	@RequestMapping(value = "/e-capitalization", method = RequestMethod.POST)
 	public ResponseEntity<String> example(HttpServletRequest request) {
 
@@ -57,7 +61,7 @@ public class ECapitalizationService extends BaseRestController {
 
 		Statement textForEnrichment;
 		try {
-			textForEnrichment = getRdfConversionService()
+			textForEnrichment = rdfConversionService
 					.extractFirstPlaintext(model);
 		} catch (Exception e) {
 			logger.error(e);
@@ -74,6 +78,7 @@ public class ECapitalizationService extends BaseRestController {
 				.createProperty("http://freme-project.eu/example-enrichment");
 		textForEnrichment.getSubject().addLiteral(property, enrichment);
 
-		return createSuccessResponse(model, parameters.getOutformat());
+		return restHelper.createSuccessResponse(model,
+				parameters.getOutformat());
 	}
 }
