@@ -20,9 +20,6 @@ package eu.freme.eservices.example;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,18 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-
-import eu.freme.common.conversion.etranslate.TranslationConversionService;
 import eu.freme.common.conversion.rdf.RDFConstants;
-import eu.freme.common.conversion.rdf.RDFConstants.RDFSerialization;
 import eu.freme.common.exception.BadRequestException;
-import eu.freme.common.exception.ExternalServiceFailedException;
 import eu.freme.common.exception.InternalServerErrorException;
 import eu.freme.common.rest.BaseRestController;
 import eu.freme.common.rest.NIFParameterSet;
