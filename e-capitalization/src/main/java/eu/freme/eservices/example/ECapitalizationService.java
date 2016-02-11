@@ -17,26 +17,24 @@
  */
 package eu.freme.eservices.example;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Statement;
-import eu.freme.common.conversion.rdf.RDFConstants;
+
 import eu.freme.common.exception.BadRequestException;
 import eu.freme.common.exception.InternalServerErrorException;
 import eu.freme.common.rest.BaseRestController;
 import eu.freme.common.rest.NIFParameterSet;
+import eu.freme.common.rest.RestHelper;
 
 /**
  * Example e-Service that enriches strings send to it with capitalization.
@@ -48,49 +46,34 @@ public class ECapitalizationService extends BaseRestController {
 
 	Logger logger = Logger.getLogger(ECapitalizationService.class);
 
+	@Autowired
+	RestHelper restHelper;
+
 	@RequestMapping(value = "/e-capitalization", method = RequestMethod.POST)
-	public ResponseEntity<String> example(
-			@RequestHeader(value = "Accept", required = false) String acceptHeader,
-			@RequestHeader(value = "Content-Type", required = false) String contentTypeHeader,
-			@RequestParam Map<String, String> allParams,
-			@RequestBody(required = false) String postBody) {
-		
-		NIFParameterSet parameters = this.normalizeNif(postBody,acceptHeader,contentTypeHeader,allParams,false);
+	public ResponseEntity<String> example(HttpServletRequest request) {
 
-		// create rdf model
-		Model model = ModelFactory.createDefaultModel();
+		NIFParameterSet parameters = restHelper.normalizeNif(request, false);
+		Model model = restHelper.convertInputToRDFModel(parameters);
 
-		if (!parameters.getInformat().equals(
-				RDFConstants.RDFSerialization.PLAINTEXT)) {
-			// input is nif
-			try {
-				model = this.unserializeNif(parameters.getInput(),
-						parameters.getInformat());
-			} catch (Exception e) {
-				logger.error("failed", e);
-				throw new BadRequestException("Error parsing NIF input");
-			}
-		} else {
-			// input is plaintext
-			getRdfConversionService().plaintextToRDF(model, parameters.getInput(),
-					null, parameters.getPrefix());
-		}
-		
 		Statement textForEnrichment;
 		try {
-			textForEnrichment = getRdfConversionService().extractFirstPlaintext(model);
+			textForEnrichment = getRdfConversionService()
+					.extractFirstPlaintext(model);
 		} catch (Exception e) {
+			logger.error(e);
 			throw new InternalServerErrorException();
 		}
-		if( textForEnrichment == null ){
+		if (textForEnrichment == null) {
 			throw new BadRequestException("Could not find input for enrichment");
 		}
-		
-		String plaintext = textForEnrichment.getObject().asLiteral().getString();
+
+		String plaintext = textForEnrichment.getObject().asLiteral()
+				.getString();
 		String enrichment = plaintext.toUpperCase();
-		Property property = model.createProperty("http://freme-project.eu/example-enrichment");
+		Property property = model
+				.createProperty("http://freme-project.eu/example-enrichment");
 		textForEnrichment.getSubject().addLiteral(property, enrichment);
-		
+
 		return createSuccessResponse(model, parameters.getOutformat());
 	}
 }

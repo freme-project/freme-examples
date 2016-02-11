@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.springframework.context.ApplicationContext;
 
+import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
@@ -17,14 +18,15 @@ public class ECapitalizationServiceTest {
 	@Test
 	public void test() throws UnirestException {
 		ApplicationContext context = FREMEStarter
-				.startPackageFromClasspath("example-test-package.xml");
+				.startPackageFromClasspath("e-capitalization-test-package.xml");
 		TestHelper testHelper = context.getBean(TestHelper.class);
 
-		String response = Unirest
-				.post(testHelper.getAPIBaseUrl() + "/e-xample")
+		HttpResponse<String> response = Unirest
+				.post(testHelper.getAPIBaseUrl() + "/e-capitalization")
 				.queryString("input", "hello world")
-				.queryString("informat", "text").asString().getBody();
+				.queryString("informat", "text").asString();
 
-		assertTrue(response.contains("HELLO WORLD"));
+		assertTrue(response.getStatus() == 200);
+		assertTrue(response.getBody().contains("HELLO WORLD"));
 	}
 }
