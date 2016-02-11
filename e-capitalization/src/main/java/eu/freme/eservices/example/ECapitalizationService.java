@@ -70,9 +70,9 @@ public class ECapitalizationService extends BaseRestController {
 		if (textForEnrichment == null) {
 			throw new BadRequestException("Could not find input for enrichment");
 		}
-
 		String plaintext = textForEnrichment.getObject().asLiteral()
 				.getString();
+		
 		String enrichment = plaintext.toUpperCase();
 		Property property = model
 				.createProperty("http://freme-project.eu/example-enrichment");
