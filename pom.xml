@@ -6,5 +6,6 @@
   <packaging>pom</packaging>
   <modules>
 	  <module>e-capitalization</module>
+	  <module>logging-filter</module>
   </modules>
 </project>
