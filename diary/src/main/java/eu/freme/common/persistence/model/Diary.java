@@ -32,10 +32,12 @@ public class Diary extends OwnedResource {
     // DiaryRepository has to define findOneByName(String name).
     String name;
 
-    @JsonIgnore // we use the deserializedEvents to build the json
     @Lob // do not forget to mark large Strings as Lobs!
     String events;
 
+    // we use "events" to build the json. Otherwise getAll entities fails,
+    // it returns just the content in the database without any postprocessing
+    @JsonIgnore
     @Transient // do not persist this to the database
     List<DiaryEvent> deserializedEvents;
 

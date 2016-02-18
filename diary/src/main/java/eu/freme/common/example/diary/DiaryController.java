@@ -40,7 +40,7 @@ public class DiaryController extends OwnedResourceManagingController<Diary>{
             try {
                 newEvent = mapper.readValue(body, DiaryEvent.class);
             } catch (IOException e) {
-                throw new BadRequestException("Error in the json: could not create a DiaryEvent from body content.");
+                throw new BadRequestException("Error in the json: could not create a DiaryEvent from body content. "+e.getMessage());
             }
         }else{
             // if there is no body, set some defaults
@@ -58,7 +58,6 @@ public class DiaryController extends OwnedResourceManagingController<Diary>{
         // is not already set.
         newEvent.addParticipant(newDiary.getOwner());
         newDiary.addEvent(newEvent);
-        newDiary.serializeEvents();
 
         return newDiary;
     }
@@ -72,7 +71,7 @@ public class DiaryController extends OwnedResourceManagingController<Diary>{
         try {
             newEvent = mapper.readValue(body, DiaryEvent.class);
         } catch (IOException e) {
-            throw new BadRequestException("Error in the json: could not create a DiaryEvent from body content.");
+            throw new BadRequestException("Error in the json: could not create a DiaryEvent from body content. "+e.getMessage());
         }
 
         diary.addEvent(newEvent);
