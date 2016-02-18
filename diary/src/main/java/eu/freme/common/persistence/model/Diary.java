@@ -19,7 +19,8 @@ import java.util.List;
  * This is a more complex model class for an access restricted entity object.
  * It contains a list of DiaryEvents which are (de)serialized while accessing
  * the database via the DiaryDAO. Therefore, it implements the methods
- * serializeEvents and deserializeEvents.
+ * serializeEvents and deserializeEvents which are called in the overwritten
+ * methods postRead and preSave.
  * Furthermore, entities of this class are identified by a "name" instead of the
  * default auto incremented "id".
  */
@@ -32,17 +33,16 @@ public class Diary extends OwnedResource {
     // DiaryRepository has to define findOneByName(String name).
     String name;
 
+    // we use "deserializedEvents" to build the json.
+    @JsonIgnore
     @Lob // do not forget to mark large Strings as Lobs!
     String events;
 
-    // we use "events" to build the json. Otherwise getAll entities fails,
-    // it returns just the content in the database without any postprocessing
-    @JsonIgnore
     @Transient // do not persist this to the database
     List<DiaryEvent> deserializedEvents;
 
     // This default constructor is needed for jpa construction.
-    // The owner has to set to "null", because no authenticated user
+    // The owner has to  be set to "null", because no authenticated user
     // is available during jpa construction.
     public Diary(){super(null);}
 
@@ -53,6 +53,18 @@ public class Diary extends OwnedResource {
         this.name = name;
         deserializedEvents = new ArrayList<DiaryEvent>();
         events = "[]";
+    }
+
+    // This is executed after the entity is created from the database content
+    @Override
+    public void postRead(){
+        deserializeEvents();
+    }
+
+    // This is executed before the entity will be persisted to the database
+    @Override
+    public void preSave(){
+        serializeEvents();
     }
 
     @JsonIgnore
