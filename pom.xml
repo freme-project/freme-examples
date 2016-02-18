@@ -7,5 +7,6 @@
   <modules>
 	  <module>e-capitalization</module>
 	  <module>logging-filter</module>
+      <module>diary</module>
   </modules>
 </project>
