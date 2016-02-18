@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class DiaryEvent {
     long time;
     String place;
-    ArrayList<User> participients;
+    ArrayList<User> participants;
     String description;
 
     public DiaryEvent(){
-        participients = new ArrayList<User>();
+        participants = new ArrayList<User>();
         time = System.currentTimeMillis();
     }
 
@@ -30,16 +30,16 @@ public class DiaryEvent {
         this.place = place;
     }
 
-    public ArrayList<User> getParticipients() {
-        return participients;
+    public ArrayList<User> getParticipants() {
+        return participants;
     }
 
-    public void setParticipients(ArrayList<User> participients) {
-        this.participients = participients;
+    public void setParticipants(ArrayList<User> participants) {
+        this.participants = participants;
     }
 
-    public void addParticipient(User participient){
-        participients.add(participient);
+    public void addParticipant(User participant){
+        participants.add(participant);
     }
 
     public String getDescription() {

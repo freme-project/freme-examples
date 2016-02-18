@@ -20,14 +20,16 @@ import java.util.List;
  * It contains a list of DiaryEvents which are (de)serialized while accessing
  * the database via the DiaryDAO. Therefore, it implements the methods
  * serializeEvents and deserializeEvents.
- * Furthermore, entities of this class are identified by a name instead of the
- * default auto incremented id.
+ * Furthermore, entities of this class are identified by a "name" instead of the
+ * default auto incremented "id".
  */
 @Entity
 public class Diary extends OwnedResource {
     // The (non default) identifier of the diary.
-    // Therefore, DiaryDAO needs to overwrite OwnedResourceDAO.findOneByIdentifierUnsecured
-    // and DiaryRepository has to define findOneByName(String name).
+    // To replace the dfault identifier("id"),
+    // DiaryDAO needs to overwrite OwnedResourceDAO.findOneByIdentifierUnsecured,
+    // Diary needs to overwrite getIdentifier and
+    // DiaryRepository has to define findOneByName(String name).
     String name;
 
     @JsonIgnore // we use the deserializedEvents to build the json
@@ -37,14 +39,24 @@ public class Diary extends OwnedResource {
     @Transient // do not persist this to the database
     List<DiaryEvent> deserializedEvents;
 
-    public Diary(){}
+    // This default constructor is needed for jpa construction.
+    // The owner has to set to "null", because no authenticated user
+    // is available during jpa construction.
+    public Diary(){super(null);}
 
     public Diary(String name) {
-        // set visibility=PUBLIC and the creationTime
+        // set visibility=PUBLIC, the creationTime
+        // and owner={currently authenticated user}
         super();
         this.name = name;
         deserializedEvents = new ArrayList<DiaryEvent>();
         events = "[]";
+    }
+
+    @JsonIgnore
+    @Override
+    public String getIdentifier(){
+        return getName();
     }
 
     public String getName() {

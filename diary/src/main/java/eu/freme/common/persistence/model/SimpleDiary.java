@@ -15,6 +15,8 @@ public class SimpleDiary extends OwnedResource {
     @Lob // do not forget to mark large Strings as Lobs!
     String content;
 
+    public SimpleDiary(){super(null);}
+
     public String getContent() {
         return content;
     }
