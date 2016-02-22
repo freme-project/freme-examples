@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import eu.freme.common.example.diary.DiaryEvent;
+import eu.freme.common.exception.BadRequestException;
 import eu.freme.common.exception.InternalServerErrorException;
 
 import javax.persistence.Entity;
@@ -91,7 +92,7 @@ public class Diary extends OwnedResource {
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             events = ow.writeValueAsString(deserializedEvents);
         } catch (JsonProcessingException e) {
-            throw new InternalServerErrorException("Could not serialize DiaryEvents.");
+            throw new BadRequestException("Could not serialize DiaryEvents.");
         }
     }
 

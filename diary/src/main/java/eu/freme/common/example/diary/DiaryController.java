@@ -47,6 +47,7 @@ public class DiaryController extends OwnedResourceManagingController<Diary>{
             newEvent = new DiaryEvent();
             newEvent.setDescription("this is my first event");
             newEvent.setPlace("here");
+            newEvent.setTime(System.currentTimeMillis());
         }
 
         // Add the owner to the participants.

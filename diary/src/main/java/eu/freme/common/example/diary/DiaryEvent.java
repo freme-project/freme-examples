@@ -15,11 +15,15 @@ public class DiaryEvent {
 
     public DiaryEvent(){
         participants = new ArrayList<User>();
-        time = System.currentTimeMillis();
+        //time = System.currentTimeMillis();
     }
 
     public long getTime() {
         return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getPlace() {
