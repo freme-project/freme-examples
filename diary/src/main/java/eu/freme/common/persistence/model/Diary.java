@@ -57,7 +57,7 @@ public class Diary extends OwnedResource {
 
     // This is executed after the entity is created from the database content
     @Override
-    public void postRead(){
+    public void postFetch(){
         deserializeEvents();
     }
 
