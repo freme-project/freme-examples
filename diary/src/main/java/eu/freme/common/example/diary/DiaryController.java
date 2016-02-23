@@ -71,6 +71,7 @@ public class DiaryController extends OwnedResourceManagingController<Diary>{
         DiaryEvent newEvent;
         try {
             newEvent = mapper.readValue(body, DiaryEvent.class);
+            newEvent.addParticipant(diary.getOwner());
         } catch (IOException e) {
             throw new BadRequestException("Error in the json: could not create a DiaryEvent from body content. "+e.getMessage());
         }

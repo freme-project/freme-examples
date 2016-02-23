@@ -45,7 +45,10 @@ public class Diary extends OwnedResource {
     // This default constructor is needed for jpa construction.
     // The owner has to  be set to "null", because no authenticated user
     // is available during jpa construction.
-    public Diary(){super(null);}
+    public Diary(){
+        super(null);
+        deserializedEvents = new ArrayList<DiaryEvent>();
+    }
 
     public Diary(String name) {
         // set visibility=PUBLIC, the creationTime

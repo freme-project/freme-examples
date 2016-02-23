@@ -26,7 +26,7 @@ public class SimpleDiaryTest {
     OwnedResourceManagingHelper<SimpleDiary> ormh;
 
     // initialize the ApplicationContext, helper objects and authenticate the users needed for the tests
-    public SimpleDiaryTest() throws UnirestException {
+    public SimpleDiaryTest() throws UnirestException, IOException {
         // load the needed modules and create the ApplicationContext
         ApplicationContext context = IntegrationTestSetup.getContext("diary-example-test-package.xml");
         // Create the AuthenticatedTestHelper.
@@ -42,8 +42,7 @@ public class SimpleDiaryTest {
         // To let the ormh convert the SimpleDiary to json and back to check its content,
         // the entity class has to be provided as second argument.
         // Furthermore, it needs the AuthenticatedTestHelper.
-        // We don't have to name a certain entityIdentifier because the default id is used.
-        ormh = new OwnedResourceManagingHelper<SimpleDiary>("/simplediary", SimpleDiary.class, ath);//, null);
+        ormh = new OwnedResourceManagingHelper<SimpleDiary>("/simplediary", SimpleDiary.class, ath);
         // create the tokens for the users described above
         ath.authenticateUsers();
     }
