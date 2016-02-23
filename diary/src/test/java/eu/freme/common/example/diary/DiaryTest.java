@@ -1,6 +1,5 @@
 package eu.freme.common.example.diary;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -9,7 +8,6 @@ import eu.freme.bservices.testhelper.OwnedResourceManagingHelper;
 import eu.freme.bservices.testhelper.SimpleEntityRequest;
 import eu.freme.bservices.testhelper.api.IntegrationTestSetup;
 import eu.freme.common.persistence.model.Diary;
-import eu.freme.common.persistence.model.OwnedResource;
 import eu.freme.common.rest.OwnedResourceManagingController;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -40,6 +38,8 @@ public class DiaryTest {
     @Test
     public void testDiaryManagement() throws IOException, UnirestException {
 
+        logger.info("test Diary management");
+
         String diaryName = "myDiary";
 
         // create a first event
@@ -58,17 +58,17 @@ public class DiaryTest {
         // create a second event
         DiaryEvent secondEvent = new DiaryEvent();
         secondEvent.addParticipant(ath.getUserWithoutPermission());
-        secondEvent.setDescription("This is my second important event.");
+        secondEvent.setDescription("This is my second important event. I met UserWithoutPermission.");
         secondEvent.setPlace("there");
         secondEvent.setTime(System.currentTimeMillis());
 
         // create the expected updated result
         Diary expectedUpdatedDiary = new Diary();
+        expectedUpdatedDiary.setName(expectedCreatedDiary.getName());
+        expectedUpdatedDiary.setDescription(expectedCreatedDiary.getDescription());
         expectedUpdatedDiary.addEvent(firstEvent);
         // the update request just adds the second event
         expectedUpdatedDiary.addEvent(secondEvent);
-        expectedUpdatedDiary.setName(expectedCreatedDiary.getName());
-        expectedUpdatedDiary.setDescription(expectedCreatedDiary.getDescription());
 
         // serialize the events to send them as body
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

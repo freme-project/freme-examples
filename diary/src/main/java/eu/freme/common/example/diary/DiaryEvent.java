@@ -15,7 +15,6 @@ public class DiaryEvent {
 
     public DiaryEvent(){
         participants = new ArrayList<User>();
-        //time = System.currentTimeMillis();
     }
 
     public long getTime() {
