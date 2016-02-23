@@ -71,10 +71,11 @@ public class DiaryTest {
         expectedUpdatedDiary.setDescription(expectedCreatedDiary.getDescription());
 
         // serialize the events to send them as body
-        // IMPORTANT: provide the identifier ("name"). It is set to "myDiary".
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         SimpleEntityRequest createRequest = new SimpleEntityRequest(ow.writeValueAsString(firstEvent))
+                // IMPORTANT: we provide the identifier ("name"). It is set to "myDiary".
                 .putParameter("name", diaryName)
+                // We have set a description in expectedCreatedDiary, so we have to do it in the request, too.
                 .putParameter(OwnedResourceManagingController.descriptionParameterName, expectedCreatedDiary.getDescription());
 
         SimpleEntityRequest updateRequest = new SimpleEntityRequest(ow.writeValueAsString(secondEvent));
