@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 
 /**
+ * This class tests the SimpleDiaryController
+ *
  * Created by Arne on 22.02.2016.
  */
 public class SimpleDiaryTest {
@@ -41,7 +43,7 @@ public class SimpleDiaryTest {
         // the entity class has to be provided as second argument.
         // Furthermore, it needs the AuthenticatedTestHelper.
         // We don't have to name a certain entityIdentifier because the default id is used.
-        ormh = new OwnedResourceManagingHelper<SimpleDiary>("/simplediary", SimpleDiary.class, ath, null);
+        ormh = new OwnedResourceManagingHelper<SimpleDiary>("/simplediary", SimpleDiary.class, ath);//, null);
         // create the tokens for the users described above
         ath.authenticateUsers();
     }

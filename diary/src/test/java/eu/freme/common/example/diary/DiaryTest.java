@@ -10,6 +10,11 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 /**
+ * This class tests the DiaryController.
+ *
+ * Only the enhancements to the SimpleDiaryTest are explained here,
+ * check the source code of SimpleDiaryTest to get a full explanation.
+ *
  * Created by Arne on 22.02.2016.
  */
 public class DiaryTest {
@@ -20,7 +25,8 @@ public class DiaryTest {
     public DiaryTest() throws UnirestException {
         ApplicationContext context = IntegrationTestSetup.getContext("diary-example-test-package.xml");
         ath = context.getBean(AuthenticatedTestHelper.class);
-        ormh = new OwnedResourceManagingHelper<Diary>("/complexdiary", Diary.class, ath, "name");
+        // we have to give the identifier of a Diary as last parameter
+        ormh = new OwnedResourceManagingHelper<Diary>("/complexdiary", Diary.class, ath);
         ath.authenticateUsers();
     }
 
