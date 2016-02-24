@@ -21,14 +21,14 @@ import java.util.List;
  * It contains a list of DiaryEvents which are (de)serialized while accessing
  * the database via the DiaryDAO. Therefore, it implements the methods
  * serializeEvents and deserializeEvents which are called in the overwritten
- * methods postRead and preSave.
+ * methods postFetch and preSave.
  * Furthermore, entities of this class are identified by a "name" instead of the
  * default auto incremented "id".
  */
 @Entity
 public class Diary extends OwnedResource {
     // The (non default) identifier of the diary.
-    // To replace the dfault identifier("id"),
+    // To replace the default identifier("id"),
     // DiaryDAO needs to overwrite OwnedResourceDAO.findOneByIdentifierUnsecured,
     // Diary needs to overwrite getIdentifier and
     // DiaryRepository has to define findOneByName(String name).
@@ -62,13 +62,21 @@ public class Diary extends OwnedResource {
     // This is executed after the entity is created from the database content
     @Override
     public void postFetch(){
-        deserializeEvents();
+        try{
+            deserializeEvents();
+        } catch (IOException e) {
+            throw new InternalServerErrorException("Could not deserialize DiaryEvents.");
+        }
     }
 
     // This is executed before the entity will be persisted to the database
     @Override
     public void preSave(){
-        serializeEvents();
+        try {
+            serializeEvents();
+        } catch (JsonProcessingException e) {
+            throw new BadRequestException("Could not serialize DiaryEvents.");
+        }
     }
 
     @JsonIgnore
@@ -85,28 +93,15 @@ public class Diary extends OwnedResource {
         this.name = name;
     }
 
-    public String getEvents() throws JsonProcessingException {
-        serializeEvents();
-        return events;
+    public void serializeEvents() throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        events = ow.writeValueAsString(deserializedEvents);
     }
 
-    public void serializeEvents() {
-        try {
-            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            events = ow.writeValueAsString(deserializedEvents);
-        } catch (JsonProcessingException e) {
-            throw new BadRequestException("Could not serialize DiaryEvents.");
-        }
-    }
-
-    public void deserializeEvents() {
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            deserializedEvents = mapper.readValue(events,
-                    TypeFactory.defaultInstance().constructCollectionType(List.class, DiaryEvent.class));
-        } catch (IOException e) {
-            throw new InternalServerErrorException("Could not deserialize DiaryEvents.");
-        }
+    public void deserializeEvents() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        deserializedEvents = mapper.readValue(events,
+                TypeFactory.defaultInstance().constructCollectionType(List.class, DiaryEvent.class));
     }
 
     public void addEvent(DiaryEvent event){
