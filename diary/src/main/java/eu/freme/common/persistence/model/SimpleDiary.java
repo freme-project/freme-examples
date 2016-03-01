@@ -1,13 +1,21 @@
 package eu.freme.common.persistence.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 
 /**
- * Created by Arne Binder (arne.b.binder@gmail.com) on 17.02.2016.
+ * This is a simple model class for an access restricted entity object.
+ * It contains a data property "content" and the inherited properties from
+ * OwnedResource.
+ * In most cases similar implementations should fulfill your needs.
  */
 @Entity
 public class SimpleDiary extends OwnedResource {
+
+    @Lob // do not forget to mark large Strings as Lobs!
     String content;
+
+    public SimpleDiary(){super(null);}
 
     public String getContent() {
         return content;
