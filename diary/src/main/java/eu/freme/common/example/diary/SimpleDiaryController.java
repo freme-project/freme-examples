@@ -13,15 +13,15 @@ import java.util.Map;
  *
  * It inherits from OwnedResourceManagingController, so the following
  * endpoints are provided:
- *    POST      /simplediary/manage         create a new SimpleDiary, according to the
- *                                          implementation of createEntity
- *    GET       /simplediary/manage/{id}    request a SimpleDiary with the specified id
- *    GET       /simplediary/manage         request all read accessible SimpleDiarys,
- *                                          see the authentication article in the
- *                                          FREME knowledge base for further information
- *    UPDATE     /simplediary/manage/{id}   update a certain SimpleDiary, according to the
- *                                          implementation of updateEntity
- *    DELETE     /simplediary/manage/{id}   remove the specified SimpleDiary
+ *    POST      /simplediary         create a new SimpleDiary, according to the
+ *                                   implementation of createEntity
+ *    GET       /simplediary/{id}    request a SimpleDiary with the specified id
+ *    GET       /simplediary         request all read accessible SimpleDiarys,
+ *                                   see the authentication article in the
+ *                                   FREME knowledge base for further information
+ *    UPDATE     /simplediary/{id}   update a certain SimpleDiary, according to the
+ *                                   implementation of updateEntity
+ *    DELETE     /simplediary/{id}   remove the specified SimpleDiary
  *
  * Created by Arne Binder (arne.b.binder@gmail.com) on 17.02.2016.
  */
