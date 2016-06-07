@@ -8,5 +8,6 @@
 	  <module>e-capitalization</module>
 	  <module>logging-filter</module>
       <module>diary</module>
+      <module>broker-simple</module>
   </modules>
 </project>
