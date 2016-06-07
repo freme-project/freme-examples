@@ -22,7 +22,7 @@
             </snapshots>
         </repository>
 
-        <!-- NOTE: The FREME snapshot repositories are accessible only,
+        <!-- NOTE: The FREME snapshot repository is only accessible,
         if you set the needed FREME credentials in your maven settings.xml -->
         <repository>
             <id>freme-nexus</id>

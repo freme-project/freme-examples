@@ -28,6 +28,9 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+
+		<!-- NOTE: The FREME snapshot repository is only accessible,
+        if you set the needed FREME credentials in your maven settings.xml -->
 		<repository>
 			<id>freme-nexus</id>
 			<name>freme-nexus</name>
