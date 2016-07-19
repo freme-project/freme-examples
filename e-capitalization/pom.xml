@@ -5,16 +5,15 @@
 	<version>0.1-SNAPSHOT</version>
 
 	<parent>
-		<groupId>eu.freme.e-services</groupId>
-		<artifactId>e-service-parent</artifactId>
-		<version>0.3</version>
+		<groupId>eu.freme</groupId>
+		<artifactId>freme-parent</artifactId>
+		<version>0.8</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>eu.freme.bservices</groupId>
 			<artifactId>test-helper</artifactId>
-			<version>0.21</version>
 		</dependency>
 	</dependencies>
 
