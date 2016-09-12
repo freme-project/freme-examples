@@ -17,25 +17,20 @@
  */
 package eu.freme.eservices.example;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Statement;
+import eu.freme.common.exception.BadRequestException;
+import eu.freme.common.exception.InternalServerErrorException;
+import eu.freme.common.rest.BaseRestController;
+import eu.freme.common.rest.NIFParameterSet;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Statement;
-
-import eu.freme.common.conversion.rdf.RDFConversionService;
-import eu.freme.common.exception.BadRequestException;
-import eu.freme.common.exception.InternalServerErrorException;
-import eu.freme.common.rest.BaseRestController;
-import eu.freme.common.rest.NIFParameterSet;
-import eu.freme.common.rest.RestHelper;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Example e-Service that enriches strings send to it with capitalization.
@@ -47,22 +42,15 @@ public class ECapitalizationService extends BaseRestController {
 
 	Logger logger = Logger.getLogger(ECapitalizationService.class);
 
-	@Autowired
-	RestHelper restHelper;
-
-	@Autowired
-	RDFConversionService rdfConversionService;
-
 	@RequestMapping(value = "/e-capitalization", method = RequestMethod.POST)
 	public ResponseEntity<String> example(HttpServletRequest request) {
 
-		NIFParameterSet parameters = restHelper.normalizeNif(request, false);
-		Model model = restHelper.convertInputToRDFModel(parameters);
+		NIFParameterSet parameters = getRestHelper().normalizeNif(request, false);
+		Model model = getRestHelper().convertInputToRDFModel(parameters);
 
 		Statement textForEnrichment;
 		try {
-			textForEnrichment = rdfConversionService
-					.extractFirstPlaintext(model);
+			textForEnrichment = getRdfConversionService().extractFirstPlaintext(model);
 		} catch (Exception e) {
 			logger.error(e);
 			throw new InternalServerErrorException();
@@ -78,7 +66,7 @@ public class ECapitalizationService extends BaseRestController {
 				.createProperty("http://freme-project.eu/example-enrichment");
 		textForEnrichment.getSubject().addLiteral(property, enrichment);
 
-		return restHelper.createSuccessResponse(model,
-				parameters.getOutformat());
+		return createSuccessResponse(model,
+				parameters.getOutformatString());
 	}
 }
