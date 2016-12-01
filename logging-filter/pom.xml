@@ -5,14 +5,14 @@
 	<version>0.1-SNAPSHOT</version>
 
 	<parent>
-		<groupId>eu.freme</groupId>
+		<groupId>eu.freme-project</groupId>
 		<artifactId>freme-parent</artifactId>
-		<version>0.8</version>
+		<version>0.13-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
-			<groupId>eu.freme.bservices</groupId>
+			<groupId>eu.freme-project.bservices</groupId>
 			<artifactId>test-helper</artifactId>
 		</dependency>
 	</dependencies>
