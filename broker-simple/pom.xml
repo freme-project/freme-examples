@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>eu.freme-project.packages</groupId>
-        <artifactId>package-parent</artifactId>
-        <version>0.13-SNAPSHOT</version> 
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>eu.freme-project.packages</groupId>
+		<artifactId>package-parent</artifactId>
+		<version>0.13-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>broker-simple</artifactId>
-    <version>0.1-SNAPSHOT</version>
+	<artifactId>broker-simple</artifactId>
+	<version>0.1-SNAPSHOT</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>eu.freme-project.bservices.controllers</groupId>
-            <artifactId>users</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>eu.freme-project.e-services</groupId>
-            <artifactId>tilde-services</artifactId>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>eu.freme-project.bservices.controllers</groupId>
+			<artifactId>users</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>eu.freme-project.e-services</groupId>
+			<artifactId>tilde-services</artifactId>
+		</dependency>
+	</dependencies>
+
+	<scm>
+		<connection>scm:git:git@github.com:freme-project/freme-examples.git</connection>
+		<url>scm:git:git@github.com/freme-project:freme-examples.git</url>
+		<developerConnection>scm:git:git@github.com:freme-project/freme-examples.git</developerConnection>
+	</scm>
 
 </project>

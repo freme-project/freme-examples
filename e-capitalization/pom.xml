@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>e-capitalization</artifactId>
 	<version>0.2-SNAPSHOT</version>
@@ -15,5 +16,11 @@
 			<artifactId>test-helper</artifactId>
 		</dependency>
 	</dependencies>
+
+	<scm>
+		<connection>scm:git:git@github.com:freme-project/freme-examples.git</connection>
+		<url>scm:git:git@github.com/freme-project:freme-examples.git</url>
+		<developerConnection>scm:git:git@github.com:freme-project/freme-examples.git</developerConnection>
+	</scm>
 
 </project>

@@ -19,4 +19,9 @@
         </dependency>
     </dependencies>
 
+  	<scm>
+		<connection>scm:git:git@github.com:freme-project/freme-examples.git</connection>
+		<url>scm:git:git@github.com/freme-project:freme-examples.git</url>
+		<developerConnection>scm:git:git@github.com:freme-project/freme-examples.git</developerConnection>
+	</scm>
 </project>
