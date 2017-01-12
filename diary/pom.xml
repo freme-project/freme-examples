@@ -21,5 +21,6 @@
 		<connection>scm:git:git@github.com:freme-project/freme-examples.git</connection>
 		<url>scm:git:git@github.com/freme-project:freme-examples.git</url>
 		<developerConnection>scm:git:git@github.com:freme-project/freme-examples.git</developerConnection>
-	</scm>
+	  <tag>example-parent-0.2</tag>
+  </scm>
 </project>

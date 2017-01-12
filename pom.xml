@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>eu.freme-project.examples</groupId>
   <artifactId>example-parent</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <packaging>pom</packaging>
          <parent>
                 <groupId>eu.freme-project</groupId>
@@ -21,5 +21,6 @@
 		<connection>scm:git:git@github.com:freme-project/freme-examples.git</connection>
 		<url>scm:git:git@github.com/freme-project:freme-examples.git</url>
 		<developerConnection>scm:git:git@github.com:freme-project/freme-examples.git</developerConnection>
-	</scm>
+	  <tag>example-parent-0.2</tag>
+  </scm>
 </project>
