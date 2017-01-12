@@ -4,7 +4,13 @@
   <artifactId>example-parent</artifactId>
   <version>0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <modules>
+         <parent>
+                <groupId>eu.freme-project</groupId>
+                <artifactId>freme-parent</artifactId>
+                <version>0.17</version>
+        </parent>
+
+ <modules>
 	  <module>e-capitalization</module>
 	  <module>logging-filter</module>
       <module>diary</module>
